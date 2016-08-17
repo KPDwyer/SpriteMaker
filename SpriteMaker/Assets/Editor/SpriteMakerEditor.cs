@@ -1,42 +1,74 @@
 ﻿using UnityEngine;
 using UnityEditor;
 public class SpriteMakerEditor : EditorWindow {
-	string myString = "Hello World";
-	TextureBuilder texBuilder;
 
+	TextureBuilder texBuilder;
+	DrawCommandManager drawCommands;
+
+	SpritePreviewEditor spritePreview;
 
 	[MenuItem ("Window/SpriteMaker")]
 	static void Init () {
 		SpriteMakerEditor window = (SpriteMakerEditor)EditorWindow.GetWindow (typeof (SpriteMakerEditor));
 		window.Show();
-		window.texBuilder = new TextureBuilder ();
-
-
 	}
 
-
-
 	void OnGUI () {
-		GUILayout.Label ("Temp Debug", EditorStyles.boldLabel);
+		GUILayout.Label ("Sprite Info", EditorStyles.boldLabel);
 
 		if (texBuilder == null)
 			texBuilder = new TextureBuilder ();
-		
+
+		if (drawCommands == null)
+			drawCommands = new DrawCommandManager ();
+
+		EditorGUILayout.BeginHorizontal ();
+		EditorGUILayout.BeginVertical ("Box");
+
 		texBuilder.fileName = EditorGUILayout.TextField ("File Name", texBuilder.fileName);
 		texBuilder.pixelWidth = GetIntFromTextField(EditorGUILayout.TextField("Width", texBuilder.pixelWidth.ToString()));
 		texBuilder.pixelHeight = GetIntFromTextField(EditorGUILayout.TextField("Height", texBuilder.pixelHeight.ToString()));
 
-		//texBuilder.pixelWidth = EditorGUILayout.TextField("Width",texBuilder.fileName,
 
 
 		if (GUILayout.Button ("Make Texture")) {
 			MakeTexture ();
 		}
+
+
+		EditorGUILayout.EndVertical ();
+
+		EditorGUILayout.BeginVertical ();
+		GUILayout.Label ("Draw Commands", EditorStyles.boldLabel);
+
+		drawCommands.DrawControls ();
+		EditorGUILayout.EndVertical ();
+
+		EditorGUILayout.EndHorizontal ();
+		EditorGUILayout.BeginHorizontal ();
+
+
+		EditorGUILayout.EndHorizontal ();
+		 
+
+
+
+	}
+
+	private void ShowPreview(Texture2D _tex)
+	{
+		if (spritePreview == null) {
+			spritePreview = (SpritePreviewEditor)EditorWindow.GetWindow (typeof(SpritePreviewEditor));
+			spritePreview.Show ();
+		}
+		spritePreview.Focus ();
+		spritePreview.SetTexture (_tex);
 	}
 
 	private void MakeTexture()
 	{
-		texBuilder.BuildTexture ();
+		ShowPreview (texBuilder.BuildTexture (drawCommands.GetDrawCommands()));
+		//texBuilder.SaveTexture ();
 	}
 
 	int temp = 0;
