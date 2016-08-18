@@ -15,27 +15,23 @@ The add-on is still under development, much of the feature set is still TBA.
 
 
 **v 0.1**
-File Name
-File Dimensions
-File Preview
-File Export
-Add Draw Command Functionality
-Remove Draw Command Functionality
-Draw Commands: Fill, Rectangle, Circle, Rounded Rectangle
+1. File Name
+2. File Dimensions
+3. File Preview
+4. File Export
+5. Add Draw Command Functionality
+6. Remove Draw Command Functionality
+7. Draw Commands: Fill, Rectangle, Circle, Rounded Rectangle
 
 
 **v 0.15**
-
 1. Cleanup Cruft
 2. Namespace
 3. Proper Readme & Intro doc
 
 **v 0.2**
-
 1. Rearrange Draw Command
-
 2. Hide Draw Command
-
 3. N-Gon Draw Command
 
 **v 0.3**
