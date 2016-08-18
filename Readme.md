@@ -15,6 +15,7 @@ The add-on is still under development, much of the feature set is still TBA.
 
 
 **v 0.1**
+
 1. File Name
 2. File Dimensions
 3. File Preview
@@ -25,24 +26,29 @@ The add-on is still under development, much of the feature set is still TBA.
 
 
 **v 0.15**
+
 1. Cleanup Cruft
 2. Namespace
 3. Proper Readme & Intro doc
 
 **v 0.2**
+
 1. Rearrange Draw Command
 2. Hide Draw Command
 3. N-Gon Draw Command
 
 **v 0.3**
+
 1. Line Draw Command
 2. Star Draw Command
 3. Perlin Noise Draw Command
 4. Gradient Fill Draw Command
 
 **v eventually**
+
 1. Masking
 2. Blend Modes
 
 **v possibly**
+
 1. Effects (Blur, Glow, Invert)
