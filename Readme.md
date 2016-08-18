@@ -25,13 +25,17 @@ Draw Commands: Fill, Rectangle, Circle, Rounded Rectangle
 
 
 **v 0.15**
+
 1. Cleanup Cruft
 2. Namespace
 3. Proper Readme & Intro doc
 
 **v 0.2**
+
 1. Rearrange Draw Command
+
 2. Hide Draw Command
+
 3. N-Gon Draw Command
 
 **v 0.3**
