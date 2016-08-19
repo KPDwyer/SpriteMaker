@@ -37,23 +37,30 @@ public class DrawCircle : BaseDrawCommand {
 		int upperBounds = pixelPosY + pixelRadius;
 		int lowerBounds = pixelPosY - pixelRadius;
 
-
+		//d
 
 		for (int x = leftBounds; x <= rightBounds; x++) {
 			tempVector.x = x;
-			for (int y = lowerBounds; y <= upperBounds; y++) {
-				tempVector.y = y;
+			if (x >= 0 && x < _width) {
+				for (int y = lowerBounds; y <= upperBounds; y++) {
+					if (y >= 0 && y < _height) {
+						tempVector.y = y;
+						Color c = col;
+						c.a = 1.0f - Vector2.Distance (positionVector, tempVector) / pixelRadius;
+						if (c.a > aliasEdge) {
+							c.a = 1.0f;
+						} else {
+							c.a = Mathf.InverseLerp (0, aliasEdge, c.a); 
+						}
+						c.r *= c.a;
+						c.g *= c.a;
+						c.b *= c.a;
 
-				col.a = 1.0f-Vector2.Distance (positionVector, tempVector)/pixelRadius;
-				if (col.a > aliasEdge) {
-					col.a = 1.0f;
-				} else {
-					col.a = Mathf.InverseLerp(0,aliasEdge,col.a); 
+
+						_input [y * _width + x] += c;
+
+					}
 				}
-
-				_input [y * _width + x] = col;
-
-
 			}
 		}
 			

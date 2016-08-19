@@ -7,6 +7,8 @@ public class SpriteMakerEditor : EditorWindow {
 
 	SpritePreviewEditor spritePreview;
 
+	private bool previewFocus = false;
+
 	[MenuItem ("Window/SpriteMaker")]
 	static void Init () {
 		SpriteMakerEditor window = (SpriteMakerEditor)EditorWindow.GetWindow (typeof (SpriteMakerEditor));
@@ -14,7 +16,6 @@ public class SpriteMakerEditor : EditorWindow {
 	}
 
 	void OnGUI () {
-		GUILayout.Label ("Sprite Info", EditorStyles.boldLabel);
 
 		if (texBuilder == null)
 			texBuilder = new TextureBuilder ();
@@ -22,34 +23,18 @@ public class SpriteMakerEditor : EditorWindow {
 		if (drawCommands == null)
 			drawCommands = new DrawCommandManager ();
 
-		EditorGUILayout.BeginHorizontal ();
-		EditorGUILayout.BeginVertical ("Box");
+		EditorGUILayout.BeginVertical ();{
 
-		texBuilder.fileName = EditorGUILayout.TextField ("File Name", texBuilder.fileName);
-		texBuilder.pixelWidth = GetIntFromTextField(EditorGUILayout.TextField("Width", texBuilder.pixelWidth.ToString()));
-		texBuilder.pixelHeight = GetIntFromTextField(EditorGUILayout.TextField("Height", texBuilder.pixelHeight.ToString()));
+			GUISpriteInfo ();
+			GUIDrawCommands ();
 
 
+		}EditorGUILayout.EndVertical ();
 
-		if (GUILayout.Button ("Make Texture")) {
-			MakeTexture ();
+		if (previewFocus) {
+			spritePreview.Focus ();
+			previewFocus = false;
 		}
-
-
-		EditorGUILayout.EndVertical ();
-
-		EditorGUILayout.BeginVertical ();
-		GUILayout.Label ("Draw Commands", EditorStyles.boldLabel);
-
-		drawCommands.DrawControls ();
-		EditorGUILayout.EndVertical ();
-
-		EditorGUILayout.EndHorizontal ();
-		EditorGUILayout.BeginHorizontal ();
-
-
-		EditorGUILayout.EndHorizontal ();
-		 
 
 
 
@@ -61,7 +46,6 @@ public class SpriteMakerEditor : EditorWindow {
 			spritePreview = (SpritePreviewEditor)EditorWindow.GetWindow (typeof(SpritePreviewEditor));
 			spritePreview.Show ();
 		}
-		spritePreview.Focus ();
 		spritePreview.SetTexture (_tex);
 	}
 
@@ -70,6 +54,48 @@ public class SpriteMakerEditor : EditorWindow {
 		ShowPreview (texBuilder.BuildTexture (drawCommands.GetDrawCommands()));
 		//texBuilder.SaveTexture ();
 	}
+
+	private void GUISpriteInfo()
+	{
+		GUILayout.Label ("Sprite Info", EditorStyles.boldLabel);
+
+		EditorGUILayout.BeginVertical ("Box");{
+
+			texBuilder.fileName = EditorGUILayout.TextField ("File Name", texBuilder.fileName);
+			EditorGUILayout.BeginHorizontal (); {
+				GUILayout.Label ("Width");
+				texBuilder.pixelWidth = GetIntFromTextField (EditorGUILayout.TextField ( texBuilder.pixelWidth.ToString ()));		
+				GUILayout.Label ("Height");
+
+				texBuilder.pixelHeight = GetIntFromTextField (EditorGUILayout.TextField (texBuilder.pixelHeight.ToString ()));
+			}EditorGUILayout.EndHorizontal();
+
+
+
+			if (GUILayout.Button ("Make Texture")) {
+				MakeTexture ();
+				previewFocus = true;
+			}
+
+		}EditorGUILayout.EndVertical ();
+	}
+
+
+	private void GUIDrawCommands()
+	{
+
+		GUILayout.Label ("Draw Commands", EditorStyles.boldLabel);
+
+		EditorGUILayout.BeginVertical ("Box");{
+
+
+			drawCommands.DrawControls ();
+
+
+
+		}EditorGUILayout.EndVertical ();
+	}
+
 
 	int temp = 0;
 	private int GetIntFromTextField(string _text)
