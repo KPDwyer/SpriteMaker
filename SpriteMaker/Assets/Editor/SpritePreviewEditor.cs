@@ -5,7 +5,7 @@ public class SpritePreviewEditor : EditorWindow {
 
 	public Texture2D mTex;
 	private Material mat;
-
+	private Texture2D mGray;
 
 
 	void OnGUI()
@@ -22,5 +22,8 @@ public class SpritePreviewEditor : EditorWindow {
 			mat = new Material(Shader.Find("UI/Default"));
 		}
 		mTex = _tex;
+		mTex.filterMode = FilterMode.Point;
+		mTex.alphaIsTransparency = true;
+
 	}
 }

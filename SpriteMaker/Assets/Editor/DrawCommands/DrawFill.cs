@@ -4,9 +4,9 @@ using System.Collections;
 
 public class DrawFill : BaseDrawCommand {
 
-	public Color32 fill;
+	public Color fill;
 
-	public override Color32[] DrawToColorArray (Color32[] _input, int _width, int _height)
+	public override Color[] DrawToColorArray (Color[] _input, int _width, int _height)
 	{
 		for (int i = 0; i < _input.Length; i++) {
 			_input[i] = fill;

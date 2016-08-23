@@ -9,6 +9,8 @@ public class DrawCommandManager {
 
 	private BaseDrawCommand.DrawCommandType DrawCommandToInsert;
 
+	private int CommandToRemove = -1;
+
 	public DrawCommandManager()
 	{
 		DrawCommands.Add(new DrawFill());
@@ -43,6 +45,9 @@ public class DrawCommandManager {
 
 		}
 
+		RemoveDrawCommand (CommandToRemove);
+		CommandToRemove = -1;
+
 	}
 
 	public List<BaseDrawCommand> GetDrawCommands()
@@ -66,12 +71,20 @@ public class DrawCommandManager {
 
 	}
 
+	private void RemoveDrawCommand(int _i)
+	{
+		if (_i != -1) {
+			DrawCommands.RemoveAt (_i);
+		}
+	}
+
 	//TODO: this
 	private void SelectionGUI(int _i)
 	{
 		Color t = GUI.color;
 		GUI.color = Color.red;
 		if (GUILayout.Button ("X")) {
+			CommandToRemove = _i;
 		}
 		GUI.color = Color.cyan;
 		GUILayout.Button ("^");

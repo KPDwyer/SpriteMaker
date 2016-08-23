@@ -7,6 +7,8 @@ public class SpriteMakerEditor : EditorWindow {
 
 	SpritePreviewEditor spritePreview;
 
+	private Vector2 ScrollPosition;
+
 	private bool previewFocus = false;
 
 	[MenuItem ("Window/SpriteMaker")]
@@ -23,6 +25,9 @@ public class SpriteMakerEditor : EditorWindow {
 		if (drawCommands == null)
 			drawCommands = new DrawCommandManager ();
 
+
+		ScrollPosition = EditorGUILayout.BeginScrollView (ScrollPosition);
+
 		EditorGUILayout.BeginVertical ();{
 
 			GUISpriteInfo ();
@@ -30,6 +35,7 @@ public class SpriteMakerEditor : EditorWindow {
 
 
 		}EditorGUILayout.EndVertical ();
+		EditorGUILayout.EndScrollView ();
 
 		if (previewFocus) {
 			spritePreview.Focus ();
@@ -49,10 +55,15 @@ public class SpriteMakerEditor : EditorWindow {
 		spritePreview.SetTexture (_tex);
 	}
 
-	private void MakeTexture()
+	private void PreviewTexture()
 	{
 		ShowPreview (texBuilder.BuildTexture (drawCommands.GetDrawCommands()));
-		//texBuilder.SaveTexture ();
+	}
+
+	private void SaveTexture()
+	{
+		PreviewTexture ();
+		texBuilder.SaveTexture ();
 	}
 
 	private void GUISpriteInfo()
@@ -62,20 +73,29 @@ public class SpriteMakerEditor : EditorWindow {
 		EditorGUILayout.BeginVertical ("Box");{
 
 			texBuilder.fileName = EditorGUILayout.TextField ("File Name", texBuilder.fileName);
-			EditorGUILayout.BeginHorizontal (); {
+			EditorGUILayout.BeginHorizontal ();
+			{
 				GUILayout.Label ("Width");
-				texBuilder.pixelWidth = GetIntFromTextField (EditorGUILayout.TextField ( texBuilder.pixelWidth.ToString ()));		
+				texBuilder.pixelWidth = GetIntFromTextField (EditorGUILayout.TextField (texBuilder.pixelWidth.ToString ()));		
 				GUILayout.Label ("Height");
 
 				texBuilder.pixelHeight = GetIntFromTextField (EditorGUILayout.TextField (texBuilder.pixelHeight.ToString ()));
-			}EditorGUILayout.EndHorizontal();
-
-
-
-			if (GUILayout.Button ("Make Texture")) {
-				MakeTexture ();
-				previewFocus = true;
 			}
+			EditorGUILayout.EndHorizontal ();
+
+
+
+			EditorGUILayout.BeginHorizontal ();
+			{
+				if (GUILayout.Button ("Preview Texture")) {
+					PreviewTexture ();
+					previewFocus = true;
+				}
+				if (GUILayout.Button ("Save Texture")) {
+					SaveTexture ();
+					previewFocus = true;
+				}
+			}EditorGUILayout.EndHorizontal ();
 
 		}EditorGUILayout.EndVertical ();
 	}

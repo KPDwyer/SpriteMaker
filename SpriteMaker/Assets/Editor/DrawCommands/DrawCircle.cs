@@ -7,7 +7,7 @@ public class DrawCircle : BaseDrawCommand {
 	public Color col = Color.red;
 	public float positionX = 0.5f;
 	public float positionY = 0.5f;
-	public float radiusfloat = 0.4f;
+	public float radiusFloat = 0.4f;
 	public float aliasEdge = 0.05f;
 
 
@@ -18,13 +18,13 @@ public class DrawCircle : BaseDrawCommand {
 	private Vector2 positionVector;
 	private Vector2 tempVector;
 
-	public override Color32[] DrawToColorArray (Color32[] _input, int _width, int _height)
+	public override Color[] DrawToColorArray (Color[] _input, int _width, int _height)
 	{
 		
 		//convert our relative values to absolute pixel values
 		pixelPosX = Mathf.CeilToInt(positionX * (float)_width);
 		pixelPosY = Mathf.CeilToInt(positionY * (float)_height);
-		pixelRadius = Mathf.CeilToInt(radiusfloat * ((_width+_height)/2));
+		pixelRadius = Mathf.CeilToInt(radiusFloat * ((_width+_height)/2));
 
 
 
@@ -52,12 +52,28 @@ public class DrawCircle : BaseDrawCommand {
 						} else {
 							c.a = Mathf.InverseLerp (0, aliasEdge, c.a); 
 						}
-						c.r *= c.a;
-						c.g *= c.a;
-						c.b *= c.a;
+						c.a *= col.a;
+						Debug.Log (c.a);
 
+						//c =  Color.Lerp (_input [y * _width + x],c, c.a);
 
-						_input [y * _width + x] += c;
+						/*
+						c.r = Mathf.Lerp (_input [y * _width + x].r, c.r, c.a);
+						c.g = Mathf.Lerp (_input [y * _width + x].g, c.g, c.a);
+						c.b = Mathf.Lerp (_input [y * _width + x].b, c.b, c.a);
+						*/
+						if (c.a != 0) {
+							c.r = (c.r * c.a) + ((1 - c.a) * _input [y * _width + x].r);
+							c.g = (c.g * c.a) + ((1 - c.a) * _input [y * _width + x].g);
+							c.b = (c.b * c.a) + ((1 - c.a) * _input [y * _width + x].b);
+							//c.a = (c.a*c.a) + ((1 - c.a) * _input [y * _width + x].a);
+							//Debug.Log(c.a);
+							//Debug.Log (_input [y * _width + x].a);
+							c.a = c.a + _input [y * _width + x].a;
+
+							_input [y * _width + x] = c;
+						}
+
 
 					}
 				}
@@ -76,7 +92,8 @@ public class DrawCircle : BaseDrawCommand {
 		col = EditorGUILayout.ColorField ("Color", col);
 		positionX = float.Parse(EditorGUILayout.TextField ("X Position", positionX.ToString()));
 		positionY = float.Parse(EditorGUILayout.TextField ("Y Position", positionY.ToString()));
-		radiusfloat = float.Parse(EditorGUILayout.TextField ("Radius", radiusfloat.ToString()));
+		radiusFloat = float.Parse(EditorGUILayout.TextField ("Radius", radiusFloat.ToString()));
+		aliasEdge = float.Parse(EditorGUILayout.TextField ("AntiAliasing", aliasEdge.ToString()));
 
 
 		base.DrawControls ();

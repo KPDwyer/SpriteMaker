@@ -23,11 +23,11 @@ public class TextureBuilder {
 	{
 
 		tex = new Texture2D(pixelWidth, pixelHeight, TextureFormat.ARGB32, false);
-		Color32[] colorArray = tex.GetPixels32 ();
+		Color[] colorArray = tex.GetPixels ();
 		for (int i = 0; i < _drawCommands.Count; i++) {
 			colorArray = _drawCommands [i].DrawToColorArray (colorArray,tex.width, tex.height);
 		}
-		tex.SetPixels32 (colorArray);
+		tex.SetPixels (colorArray);
 		tex.Apply ();
 		return tex;
 

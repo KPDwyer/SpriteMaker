@@ -10,10 +10,10 @@ public class BaseDrawCommand {
 	}
 			
 
-	public virtual Color32[] DrawToColorArray(Color32[] _input, int _width, int _height)
+	public virtual Color[] DrawToColorArray(Color[] _input, int _width, int _height)
 	{
 		//some draw code here
-
+		//for when we add blend modes
 
 		return _input;
 
