@@ -6,7 +6,9 @@ public class BaseDrawCommand {
 
 	public enum DrawCommandType {
 		Fill = 0,
-		Circle = 1
+		Circle = 1,
+		Rect = 2,
+		RoundedRect = 3
 	}
 			
 

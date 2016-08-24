@@ -1,5 +1,7 @@
 # Sprite Maker
 
+[Chest Image](Chest.png)
+
 SpriteMaker is a Unity add-on for quickly making basic UI or prototype art in unity.  I’m making SpriteMaker because when I do game jams or quick mock ups, I often think something like this:
 
 _I need  64x64 rounded Rect for this panel..._
@@ -48,7 +50,16 @@ The add-on is still under development, much of the feature set is still TBA.
 
 1. Masking
 2. Blend Modes
+3. Save and load DrawCommand Queues
 
 **v possibly**
 
 1. Effects (Blur, Glow, Invert)
+
+
+##Gallery
+
+By Defining shapes relative to the canvas, you can rescale the canvas at will to have export a set of draw commands at a variety of sizes. 
+
+[Skull 64x64](Skull64.png)
+[Skull 1024x1024](Skull1024.png)

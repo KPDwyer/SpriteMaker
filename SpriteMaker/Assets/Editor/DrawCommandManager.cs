@@ -63,8 +63,14 @@ public class DrawCommandManager {
 			bdc = new DrawFill ();
 			break;
 		case BaseDrawCommand.DrawCommandType.Circle:
-		default:
 			bdc = new DrawCircle ();
+			break;
+		case BaseDrawCommand.DrawCommandType.Rect:
+		default:
+			bdc = new DrawRect ();
+			break;
+		case BaseDrawCommand.DrawCommandType.RoundedRect:
+			bdc = new DrawRoundedRect ();
 			break;
 		}
 		DrawCommands.Insert (_index + 1, bdc);

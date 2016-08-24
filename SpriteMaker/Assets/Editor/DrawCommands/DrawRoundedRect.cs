@@ -1,0 +1,167 @@
+﻿using UnityEngine;
+using UnityEditor;
+using System.Collections;
+
+public class DrawRoundedRect : BaseDrawCommand {
+
+	public float CenterX = 0.5f,CenterY = 0.5f;
+	public float Width = 0.8f,Height = 0.8f;
+	public float CornerRadius = 0.1f;
+	public float Alias = 0.05f;
+	public Color rectColor = Color.red;
+
+	private int pixelPosX;
+	private int pixelPosY;
+	private int pixelWidth;
+	private int pixelHeight;
+	private int pixelRadius;
+
+	private Vector2 positionVector;
+	private Vector2 tempVector;
+
+	public override Color[] DrawToColorArray (Color[] _input, int _width, int _height)
+	{
+
+		Color[] tempArray = new Color[_input.Length];
+
+		pixelPosX = Mathf.CeilToInt(CenterX * (float)_width);
+		pixelPosY = Mathf.CeilToInt(CenterY * (float)_height);
+		pixelWidth = Mathf.CeilToInt(Width * (_width));
+		pixelHeight = Mathf.CeilToInt(Height * (_height));
+		pixelRadius = Mathf.CeilToInt(CornerRadius * ((_width+_height)/2));
+
+		//corners
+		tempArray = DrawCircle (tempArray, _width, _height, pixelPosX + (pixelWidth / 2) - (pixelRadius / 2), pixelPosY + (pixelHeight / 2) - (pixelRadius / 2));
+		tempArray = DrawCircle (tempArray, _width, _height, pixelPosX - (pixelWidth / 2) + (pixelRadius / 2), pixelPosY + (pixelHeight / 2) - (pixelRadius / 2));
+		tempArray = DrawCircle (tempArray, _width, _height, pixelPosX + (pixelWidth / 2) - (pixelRadius / 2), pixelPosY - (pixelHeight / 2) + (pixelRadius / 2));
+		tempArray = DrawCircle (tempArray, _width, _height, pixelPosX - (pixelWidth / 2) + (pixelRadius / 2), pixelPosY - (pixelHeight / 2) + (pixelRadius / 2));
+		tempArray = DrawRect (tempArray, 
+			_width, 
+			_height,
+			pixelPosX - (pixelWidth / 2) + (pixelRadius / 2),
+			pixelPosX + (pixelWidth / 2) - (pixelRadius / 2), 
+			pixelPosY + (pixelHeight / 2) + (pixelRadius / 2),
+			pixelPosY - (pixelHeight /2) - (pixelRadius / 2)
+		);
+		tempArray = DrawRect (tempArray, 
+			_width, 
+			_height,
+			pixelPosX - (pixelWidth / 2) - (pixelRadius / 2),
+			pixelPosX + (pixelWidth / 2) + (pixelRadius / 2), 
+			pixelPosY + (pixelHeight / 2) - (pixelRadius / 2),
+			pixelPosY - (pixelHeight /2) + (pixelRadius / 2)
+		);
+			
+
+
+		for (int x = 0; x < tempArray.Length; x++) {
+
+			Color c = tempArray [x];
+
+
+			c.r = (c.r * c.a) + ((1 - c.a) * _input [x].r);
+			c.g = (c.g * c.a) + ((1 - c.a) * _input [x].g);
+			c.b = (c.b * c.a) + ((1 - c.a) * _input [x].b);
+
+			c.a = c.a + _input [x].a;
+
+			_input [x] = c;
+
+
+		}
+
+
+
+
+		//return base.DrawToColorArray (_input, _width, _height);
+		return base.DrawToColorArray (_input, _width, _height);
+	}
+
+	private Color[] DrawCircle (Color[] _input, int _width, int _height, int _pixPosX, int _pixPosY)
+	{
+
+		positionVector.x = _pixPosX;
+		positionVector.y = _pixPosY;
+
+		int leftBounds =  _pixPosX - pixelRadius;
+		int rightBounds = _pixPosX + pixelRadius;
+		int upperBounds = _pixPosY + pixelRadius;
+		int lowerBounds = _pixPosY - pixelRadius;
+
+		for (int x = leftBounds; x <= rightBounds; x++) {
+			tempVector.x = x;
+			if (x >= 0 && x < _width) {
+				for (int y = lowerBounds; y <= upperBounds; y++) {
+					if (y >= 0 && y < _height) {
+						tempVector.y = y;
+						Color c = rectColor;
+						c.a = 1.0f - Vector2.Distance (positionVector, tempVector) / pixelRadius;
+						if (c.a > Alias) {
+							c.a = 1.0f;
+						} else {
+							c.a = Mathf.InverseLerp (0, Alias, c.a); 
+						}
+						c.a *= rectColor.a;
+
+
+						if (c.a != 0) {
+							c.r = (c.r * c.a) + ((1 - c.a) * _input [y * _width + x].r);
+							c.g = (c.g * c.a) + ((1 - c.a) * _input [y * _width + x].g);
+							c.b = (c.b * c.a) + ((1 - c.a) * _input [y * _width + x].b);
+
+							c.a = Mathf.Max( c.a,  _input [y * _width + x].a);
+
+							_input [y * _width + x] = c;
+						}
+
+
+					}
+				}
+			}
+		}
+
+		return _input;
+	}
+
+	private Color[] DrawRect(Color[] _input,int _width, int _height, int leftBounds, int rightBounds, int upperBounds, int lowerBounds)
+	{
+		for (int x = leftBounds; x <= rightBounds; x++) {
+			if (x >= 0 && x < _width) {
+				for (int y = lowerBounds; y <= upperBounds; y++) {
+					if (y >= 0 && y < _height) {
+
+
+						Color c = rectColor;
+
+
+						c.r = (c.r * c.a) + ((1 - c.a) * _input [y * _width + x].r);
+						c.g = (c.g * c.a) + ((1 - c.a) * _input [y * _width + x].g);
+						c.b = (c.b * c.a) + ((1 - c.a) * _input [y * _width + x].b);
+
+						c.a = Mathf.Max(c.a,_input [y * _width + x].a);
+
+						_input [y * _width + x] = c;
+
+					}
+				}
+			}
+		}
+		return _input;
+	}
+
+	public override void DrawControls ()
+	{
+		rectColor = EditorGUILayout.ColorField ("Color", rectColor);
+		CenterX = float.Parse(EditorGUILayout.TextField ("X Position", CenterX.ToString()));
+		CenterY = float.Parse(EditorGUILayout.TextField ("Y Position", CenterY.ToString()));
+		Width = float.Parse(EditorGUILayout.TextField ("Width", Width.ToString()));
+		Height = float.Parse(EditorGUILayout.TextField ("Height", Height.ToString()));
+		CornerRadius = float.Parse (EditorGUILayout.TextField ("Corner Radius", CornerRadius.ToString ()));
+		Alias = float.Parse (EditorGUILayout.TextField ("Alias", Alias.ToString ()));
+
+
+		base.DrawControls ();
+	}
+
+
+}

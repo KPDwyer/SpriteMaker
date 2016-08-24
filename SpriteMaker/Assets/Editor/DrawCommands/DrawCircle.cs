@@ -53,22 +53,13 @@ public class DrawCircle : BaseDrawCommand {
 							c.a = Mathf.InverseLerp (0, aliasEdge, c.a); 
 						}
 						c.a *= col.a;
-						Debug.Log (c.a);
 
-						//c =  Color.Lerp (_input [y * _width + x],c, c.a);
 
-						/*
-						c.r = Mathf.Lerp (_input [y * _width + x].r, c.r, c.a);
-						c.g = Mathf.Lerp (_input [y * _width + x].g, c.g, c.a);
-						c.b = Mathf.Lerp (_input [y * _width + x].b, c.b, c.a);
-						*/
 						if (c.a != 0) {
 							c.r = (c.r * c.a) + ((1 - c.a) * _input [y * _width + x].r);
 							c.g = (c.g * c.a) + ((1 - c.a) * _input [y * _width + x].g);
 							c.b = (c.b * c.a) + ((1 - c.a) * _input [y * _width + x].b);
-							//c.a = (c.a*c.a) + ((1 - c.a) * _input [y * _width + x].a);
-							//Debug.Log(c.a);
-							//Debug.Log (_input [y * _width + x].a);
+
 							c.a = c.a + _input [y * _width + x].a;
 
 							_input [y * _width + x] = c;
