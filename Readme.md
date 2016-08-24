@@ -17,6 +17,7 @@ The add-on is still under development, much of the feature set is still TBA.
 
 
 **v 0.1**
+**Done!**
 
 1. File Name
 2. File Dimensions
@@ -28,6 +29,7 @@ The add-on is still under development, much of the feature set is still TBA.
 
 
 **v 0.15**
+**In Progress!**
 
 1. Cleanup Cruft
 2. Namespace
@@ -59,7 +61,7 @@ The add-on is still under development, much of the feature set is still TBA.
 
 ##Gallery
 
-By Defining shapes relative to the canvas, you can rescale the canvas at will to have export a set of draw commands at a variety of sizes. 
+By Defining shapes relative to the canvas, you can rescale the canvas at will to export a set of draw commands at a variety of sizes. 
 
 ![Skull 64x64](Skull64.png)
 ![Skull 1024x1024](Skull1024.png)
