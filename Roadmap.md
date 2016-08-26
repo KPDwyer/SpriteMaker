@@ -18,7 +18,7 @@
 2. Namespace
 3. Proper Readme & Intro doc
 
-##Roadmap
+##Planned
 
 **v 0.2**
 
