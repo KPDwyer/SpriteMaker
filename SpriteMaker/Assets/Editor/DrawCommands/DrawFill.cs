@@ -1,25 +1,32 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections;
+namespace SpriteMaker{
 
-public class DrawFill : BaseDrawCommand {
+	/// <summary>
+	/// Draw Command to fill the entire canvas with a color
+	/// </summary>
+	public class DrawFill : BaseDrawCommand {
 
-	public Color fill;
+		/// <summary>
+		/// Color to fill canvas with
+		/// </summary>
+		public Color fill;
 
-	public override Color[] DrawToColorArray (Color[] _input, int _width, int _height)
-	{
-		for (int i = 0; i < _input.Length; i++) {
-			_input[i] = fill;
+		public override Color[] DrawToColorArray (Color[] _input, int _width, int _height)
+		{
+			for (int x = 0; x < _input.Length; x++) {
+				_input[x] = BlendPixelToCanvas(fill,_input[x]);
+			}
+
+			return base.DrawToColorArray (_input, _width, _height);
 		}
 
-		return base.DrawToColorArray (_input, _width, _height);
+		public override void DrawControls ()
+		{
+			fill = EditorGUILayout.ColorField ("Fill Color", fill);
+			base.DrawControls ();
+		}
+
 	}
-
-	public override void DrawControls ()
-	{
-
-		fill = EditorGUILayout.ColorField ("Fill Color", fill);
-		base.DrawControls ();
-	}
-
 }
