@@ -1,9 +1,0 @@
-# For Users
-
-SpriteMaker is a quick and dirty, in-progress extension for the Unity Editor to help you create some art assets without having to leave the engine.  It does not support texture generation (or anything) at runtime.  The tool was built purely for the sake of optimizing my own workflow at game jams, and as a learning experience.  If you still think SpriteMaker is something you're interested in, please read on.
-
-##Usage Overview
-Once you've downloaded the repo and imported the files into your project, you can open the primary SpriteMaker panel by selecting
-Window -> SpriteMaker
-
-![Editor Window](Sprite Maker Editor.png)
