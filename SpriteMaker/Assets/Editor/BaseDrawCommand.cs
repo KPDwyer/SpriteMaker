@@ -17,6 +17,9 @@ namespace SpriteMaker{
 			RoundedRect = 3
 		}
 
+		/// <summary>
+		/// Blendmode Enums.  Updatewhen adding a blend mode.
+		/// </summary>
 		public enum BlendMode
 		{
 			Opacity = 0,
@@ -60,7 +63,7 @@ namespace SpriteMaker{
 
 		/// <summary>
 		/// Helper function to appropriately blend a new pixel with the canvas' pixel.
-		/// Please use this rather than editing the array directly to (eventually) support BlendModes
+		/// Please use this rather than editing the array directly to support BlendModes
 		/// </summary>
 		/// <returns>The blended color value.</returns>
 		/// <param name="_pixel">Pixel to be blended</param>
