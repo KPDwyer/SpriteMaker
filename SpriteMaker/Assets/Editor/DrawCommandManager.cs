@@ -23,32 +23,47 @@ namespace SpriteMaker{
 
 		public void DrawControls()
 		{
-			EditorGUILayout.BeginHorizontal ();{
 
-				InsertionGUI (-1);
-			}EditorGUILayout.EndHorizontal ();
 
 			for (int i = 0; i < DrawCommands.Count; i++) {
-				EditorGUILayout.BeginHorizontal ("Box");{
+
+				EditorGUILayout.BeginVertical ("Box");{
+
+					EditorGUILayout.BeginHorizontal ();
+					{
+
+						DataGUI (i);
+					}
+					EditorGUILayout.EndHorizontal ();
+
+					if (!DrawCommands [i].Hidden) {
+
+						EditorGUILayout.BeginHorizontal ();
+						{
 					
 
-					EditorGUILayout.BeginVertical ("Box");{
-						DrawCommands [i].DrawControls ();
-					}EditorGUILayout.EndVertical ();
-					EditorGUILayout.BeginVertical (GUILayout.Width(25));{
-						SelectionGUI (i);
-					}EditorGUILayout.EndVertical ();
+							EditorGUILayout.BeginVertical ("Box");
+							{
+								DrawCommands [i].DrawControls ();
+							}
+							EditorGUILayout.EndVertical ();
+							EditorGUILayout.BeginVertical (GUILayout.Width (25));
+							{
+								SelectionGUI (i);
+							}
+							EditorGUILayout.EndVertical ();
 
 
-				}EditorGUILayout.EndHorizontal ();
-
-				EditorGUILayout.BeginHorizontal ();{
-
-					InsertionGUI (i);
-				}EditorGUILayout.EndHorizontal ();
-
-
+						}
+						EditorGUILayout.EndHorizontal ();
+					}
+				}EditorGUILayout.EndVertical ();
 			}
+
+			EditorGUILayout.BeginHorizontal ();{
+
+				InsertionGUI (DrawCommands.Count-1);
+			}EditorGUILayout.EndHorizontal ();
 
 			RemoveDrawCommand (CommandToRemove);
 			RearrangeDrawCommand (CommandToRearrange, RearrangeAmount);
@@ -116,10 +131,6 @@ namespace SpriteMaker{
 		private void SelectionGUI(int _i)
 		{
 			Color t = GUI.color;
-			GUI.color = Color.red;
-			if (GUILayout.Button ("X")) {
-				CommandToRemove = _i;
-			}
 			GUI.color = Color.cyan;
 			if (GUILayout.Button ("^")) {
 				CommandToRearrange = _i;
@@ -140,6 +151,25 @@ namespace SpriteMaker{
 			DrawCommandToInsert = (BaseDrawCommand.DrawCommandType)EditorGUILayout.EnumPopup (DrawCommandToInsert);
 		}
 
+		private void DataGUI(int _i)
+		{
+			GUILayout.Label (_i.ToString() + " - " + DrawCommands[_i].Name);
+			GUI.color = Color.yellow;
+			if (GUILayout.Button (DrawCommands[_i].Hidden?"+":"-", GUILayout.MaxWidth(20))) {  //TODO: c for Collapse.  better idea?
+				DrawCommands [_i].Hidden = !DrawCommands [_i].Hidden;
+			}
+
+			GUI.color = DrawCommands [_i].Visible ? Color.green : Color.red;
+			if (GUILayout.Button ("V", GUILayout.MaxWidth(20))) {  //TODO: c for Collapse.  better idea?
+				DrawCommands [_i].Visible = !DrawCommands [_i].Visible;
+			}
+
+			GUI.color = Color.red;
+			if (GUILayout.Button ("X",GUILayout.MaxWidth(20))) {
+				CommandToRemove = _i;
+			}
+			GUI.color = Color.white;
+		}
 
 
 

@@ -37,7 +37,9 @@ namespace SpriteMaker{
 			}
 
 			for (int i = 0; i < _drawCommands.Count; i++) {
-				colorArray = _drawCommands [i].DrawToColorArray (colorArray,tex.width, tex.height);
+				if (_drawCommands [i].Visible) {
+					colorArray = _drawCommands [i].DrawToColorArray (colorArray, tex.width, tex.height);
+				}
 			}
 			tex.SetPixels (colorArray);
 			tex.Apply ();

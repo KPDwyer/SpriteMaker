@@ -27,6 +27,10 @@ namespace SpriteMaker{
 				
 
 		public BlendMode blendMode;
+		public string Name;
+		public bool Visible = true;
+		public bool Hidden = false;
+
 		private Color cachedColor;
 
 		/// <summary>

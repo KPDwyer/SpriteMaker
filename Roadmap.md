@@ -12,28 +12,29 @@
 
 ##In Progress
 
-**v 0.15**
-
-1. Cleanup Cruft
-2. Namespace
-3. Proper Readme & Intro doc
-
-##Planned
-
 **v 0.2**
 
 1. Rearrange Draw Command
 2. Hide Draw Command
-2. Blend Modes
-3. N-Gon Draw Command
+3. Blend Modes
+4. Collapse View
+5. Visibility Toggle
+6. Auto preview
+
+##Planned
 
 **v 0.3**
 
 1. Save and load DrawCommand Queues
+
+##As Needed
+
+1. N-Gon Draw Command
 2. Line Draw Command
 3. Star Draw Command
 4. Perlin Noise Draw Command
 5. Gradient Fill Draw Command
+
 
 ##Research Required
 

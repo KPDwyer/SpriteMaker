@@ -23,6 +23,7 @@ namespace SpriteMaker{
 
 			mTex = _tex;
 			mTex.filterMode = FilterMode.Point;
+			base.Repaint ();
 
 		}
 	}

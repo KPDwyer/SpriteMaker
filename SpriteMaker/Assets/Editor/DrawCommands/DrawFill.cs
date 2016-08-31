@@ -24,6 +24,7 @@ namespace SpriteMaker{
 
 		public override void DrawControls ()
 		{
+			Name = "Fill";
 			fill = EditorGUILayout.ColorField ("Fill Color", fill);
 			base.DrawControls ();
 		}
