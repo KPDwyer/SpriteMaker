@@ -13,6 +13,8 @@ namespace SpriteMaker{
 		private BaseDrawCommand.DrawCommandType DrawCommandToInsert;
 
 		private int CommandToRemove = -1;
+		private int CommandToRearrange = -1;
+		private int RearrangeAmount = 0;
 
 		public DrawCommandManager()
 		{
@@ -49,7 +51,10 @@ namespace SpriteMaker{
 			}
 
 			RemoveDrawCommand (CommandToRemove);
+			RearrangeDrawCommand (CommandToRearrange, RearrangeAmount);
 			CommandToRemove = -1;
+			CommandToRearrange = -1;
+			RearrangeAmount = 0;
 
 		}
 
@@ -87,6 +92,26 @@ namespace SpriteMaker{
 			}
 		}
 
+		private void RearrangeDrawCommand(int _i, int target)
+		{
+			if (_i != -1 && _i+target >=0 && _i+target <DrawCommands.Count) {
+				List<BaseDrawCommand> newList = new List<BaseDrawCommand> ();
+
+				for (int i = 0; i < DrawCommands.Count; i++) {
+					if (i == _i) {
+						newList.Add (DrawCommands [_i + target]);
+
+					} else if (i == _i + target) {
+						newList.Add (DrawCommands [_i]);
+
+					} else {
+						newList.Add (DrawCommands [i]);
+					}
+				}
+				DrawCommands = newList;
+			}
+		}
+
 		//TODO: this
 		private void SelectionGUI(int _i)
 		{
@@ -96,8 +121,14 @@ namespace SpriteMaker{
 				CommandToRemove = _i;
 			}
 			GUI.color = Color.cyan;
-			GUILayout.Button ("^");
-			GUILayout.Button ("V");
+			if (GUILayout.Button ("^")) {
+				CommandToRearrange = _i;
+				RearrangeAmount = -1;
+			}
+			if (GUILayout.Button ("V")) {
+				CommandToRearrange = _i;
+				RearrangeAmount = 1;
+			}
 			GUI.color = t;
 
 		}
@@ -108,6 +139,8 @@ namespace SpriteMaker{
 			}
 			DrawCommandToInsert = (BaseDrawCommand.DrawCommandType)EditorGUILayout.EnumPopup (DrawCommandToInsert);
 		}
+
+
 
 
 
