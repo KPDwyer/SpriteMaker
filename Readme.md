@@ -13,6 +13,7 @@ SpriteMaker aims to reduce the friction of cracking open a graphics program (or 
 The add-on is still under development, much of the feature set is still TBA.   
 
 [Roadmap](Roadmap.md)
+
 [Usage](Usage.md)
 
 
