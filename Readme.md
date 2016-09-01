@@ -22,3 +22,6 @@ The add-on is still under development, much of the feature set is still TBA.
 By Defining shapes relative to the canvas, you can rescale the canvas at will to export a set of draw commands at a variety of sizes. 
 ![Skull 64x64](Gallery/Skull64.png)
 ![Skull 1024x1024](Gallery/Skull1024.png)
+
+SpriteMaker isn't meant to make fullscale art assets, but I like to push what I can do with it
+![Man](Gallery/Man.png)
