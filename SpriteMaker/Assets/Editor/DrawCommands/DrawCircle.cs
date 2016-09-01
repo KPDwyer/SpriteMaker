@@ -73,7 +73,7 @@ namespace SpriteMaker{
 
 		public override void DrawControls ()
 		{
-
+			Name = "Circle"; //TODO: Should I make these editable?
 			color = EditorGUILayout.ColorField ("Color", color);
 			positionX = float.Parse(EditorGUILayout.TextField ("X Position", positionX.ToString()));
 			positionY = float.Parse(EditorGUILayout.TextField ("Y Position", positionY.ToString()));

@@ -55,7 +55,7 @@ namespace SpriteMaker{
 
 		public override void DrawControls ()
 		{
-
+			Name = "Rectangle";
 			rectColor = EditorGUILayout.ColorField ("Color", rectColor);
 			CenterX = float.Parse(EditorGUILayout.TextField ("X Position", CenterX.ToString()));
 			CenterY = float.Parse(EditorGUILayout.TextField ("Y Position", CenterY.ToString()));

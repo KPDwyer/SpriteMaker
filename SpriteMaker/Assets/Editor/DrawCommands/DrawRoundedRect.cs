@@ -15,7 +15,7 @@ namespace SpriteMaker{
 		public float CenterX = 0.5f,CenterY = 0.5f;
 		public float Width = 0.8f,Height = 0.8f;
 		public float CornerRadius = 0.1f;
-		public float Smoothness = 0.05f;
+		public float Smoothness = 0.0f;
 		public Color rectColor = Color.red;
 
 		private int pixelPosX;
@@ -153,6 +153,7 @@ namespace SpriteMaker{
 
 		public override void DrawControls ()
 		{
+			Name = "RoundedRect";
 			rectColor = EditorGUILayout.ColorField ("Color", rectColor);
 			CenterX = float.Parse(EditorGUILayout.TextField ("X Position", CenterX.ToString()));
 			CenterY = float.Parse(EditorGUILayout.TextField ("Y Position", CenterY.ToString()));

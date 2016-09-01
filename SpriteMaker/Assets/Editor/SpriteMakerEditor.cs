@@ -11,7 +11,9 @@ namespace SpriteMaker{
 
 		private Vector2 ScrollPosition;
 
+
 		private bool previewFocus = false;
+		private bool updateOnChange = false;
 
 		[MenuItem ("Window/SpriteMaker")]
 		static void Init () {
@@ -108,13 +110,16 @@ namespace SpriteMaker{
 				}
 				EditorGUILayout.EndHorizontal ();
 
-
+				updateOnChange = GUILayout.Toggle (updateOnChange, "Auto-Preview (Use Low Image Sizes)");
 
 				EditorGUILayout.BeginHorizontal ();
 				{
 					if (GUILayout.Button ("Preview Texture")) {
 						PreviewTexture ();
 						previewFocus = true;
+					}
+					if (updateOnChange) {
+						PreviewTexture ();
 					}
 					if (GUILayout.Button ("Save Texture")) {
 						SaveTexture ();
