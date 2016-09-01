@@ -8,60 +8,16 @@ _I need  64x64 rounded Rect for this panel..._
 
 _A small half circle would be great here..._
 
-etc.  SpriteMaker aims to reduce the friction of cracking open a graphics program (or bugging an artist) to create quick assets like this.  I’m developing it in the open because I don’t really have the time to deal with putting it on the asset store and provide support, but I think people might get some use out of it (or create cool Draw Commands!).
+SpriteMaker aims to reduce the friction of cracking open a graphics program (or bugging an artist) to create quick assets like this.  I’m developing it in the open because I don’t really have the time to deal with putting it on the asset store and provide support, but I think people might get some use out of it (or create cool Draw Commands!).
 
 The add-on is still under development, much of the feature set is still TBA.   
 
-
-## Roadmap
-
-
-**v 0.1**
-**Done!**
-
-1. File Name
-2. File Dimensions
-3. File Preview
-4. File Export
-5. Add Draw Command Functionality
-6. Remove Draw Command Functionality
-7. Draw Commands: Fill, Rectangle, Circle, Rounded Rectangle
-
-
-**v 0.15**
-**In Progress!**
-
-1. Cleanup Cruft
-2. Namespace
-3. Proper Readme & Intro doc
-
-**v 0.2**
-
-1. Rearrange Draw Command
-2. Hide Draw Command
-3. N-Gon Draw Command
-
-**v 0.3**
-
-1. Line Draw Command
-2. Star Draw Command
-3. Perlin Noise Draw Command
-4. Gradient Fill Draw Command
-
-**v eventually**
-
-1. Masking
-2. Blend Modes
-3. Save and load DrawCommand Queues
-
-**v possibly**
-
-1. Effects (Blur, Glow, Invert)
+[Roadmap](Roadmap.md)
+[Usage](Usage.md)
 
 
 ##Gallery
 
 By Defining shapes relative to the canvas, you can rescale the canvas at will to export a set of draw commands at a variety of sizes. 
-
 ![Skull 64x64](Skull64.png)
 ![Skull 1024x1024](Skull1024.png)
