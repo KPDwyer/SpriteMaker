@@ -20,6 +20,7 @@ namespace SpriteMaker
 
         public override Color[] DrawToColorArray(Color[] _input, int _width, int _height)
         {
+            
             for (int y = 0; y < _height; y++)
             {
                 yPosition = (float)y / (float)_height;
@@ -56,6 +57,44 @@ namespace SpriteMaker
             }
             base.DrawControls();
         }
+
+        #region SERIALIZATION
+
+        public override void OnBeforeSerialize()
+        {
+            data = new SerializedData();
+
+            data.serializedFloats = new float[4];
+            data.serializedFloats[0] = HorizontalScale;
+            data.serializedFloats[1] = VerticalScale;
+            data.serializedFloats[2] = xOffset;
+            data.serializedFloats[3] = yOffset;
+
+
+            data.serializedColors = new Color[2];
+            data.serializedColors[0] = FirstColor;
+            data.serializedColors[1] = SecondColor;
+
+
+            base.OnBeforeSerialize();
+        }
+
+        public override void PopulateFromBase(BaseDrawCommand bd)
+        {
+            HorizontalScale = bd.data.serializedFloats[0];
+            VerticalScale = bd.data.serializedFloats[1];
+            xOffset = bd.data.serializedFloats[2];
+            yOffset = bd.data.serializedFloats[3];
+
+
+            FirstColor = bd.data.serializedColors[0];
+            SecondColor = bd.data.serializedColors[1];
+
+
+            base.PopulateFromBase(bd);
+        }
+
+        #endregion
 	
     }
 }

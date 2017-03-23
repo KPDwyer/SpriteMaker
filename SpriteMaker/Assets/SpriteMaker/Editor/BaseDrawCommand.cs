@@ -3,7 +3,7 @@ using UnityEditor;
 
 namespace SpriteMaker
 {
-
+    [System.Serializable]
     /// <summary>
     /// Base Draw Command.  Subclass this to create custom draw commands
     /// </summary>
@@ -13,6 +13,7 @@ namespace SpriteMaker
         /// <summary>
         /// Types of Draw Commands.  Need to update when creating a new Draw Command
         /// </summary>
+
         public enum DrawCommandType
         {
             Fill = 0,
@@ -21,6 +22,7 @@ namespace SpriteMaker
             RoundedRect = 3,
             Perlin = 4
         }
+
 
         /// <summary>
         /// Blendmode Enums.  Updatewhen adding a blend mode.
@@ -34,13 +36,23 @@ namespace SpriteMaker
             Replace = 4
         }
 
-
         public BlendMode blendMode;
+        public DrawCommandType myType;
         public string Name;
         public bool Visible = true;
         public bool Hidden = false;
 
         private Color cachedColor;
+
+
+        [System.Serializable]
+        public struct SerializedData
+        {
+            public float[] serializedFloats;
+            public Color[] serializedColors;
+        };
+
+        public SerializedData data;
 
         /// <summary>
         /// Override this function to implement the drawing fucntion of a custom Draw Command
@@ -129,6 +141,18 @@ namespace SpriteMaker
 
             return cachedColor;
         }
+
+        public virtual void OnBeforeSerialize()
+        {
+        }
+
+        public virtual void PopulateFromBase(BaseDrawCommand bd)
+        {
+         
+            blendMode = bd.blendMode;
+        }
+
+
 
 
 

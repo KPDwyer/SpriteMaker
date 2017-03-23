@@ -5,6 +5,7 @@ using System.Collections;
 namespace SpriteMaker
 {
 
+
     /// <summary>
     /// Used to draw a Rect on the canvas.
     /// </summary>
@@ -71,6 +72,43 @@ namespace SpriteMaker
 
             base.DrawControls();
         }
+
+        #region SERIALIZATION
+
+        public override void OnBeforeSerialize()
+        {
+            data = new SerializedData();
+
+            data.serializedFloats = new float[4];
+            data.serializedFloats[0] = CenterX;
+            data.serializedFloats[1] = CenterY;
+            data.serializedFloats[2] = Width;
+            data.serializedFloats[3] = Height;
+
+
+            data.serializedColors = new Color[1];
+            data.serializedColors[0] = rectColor;
+
+
+            base.OnBeforeSerialize();
+        }
+
+        public override void PopulateFromBase(BaseDrawCommand bd)
+        {
+            CenterX = bd.data.serializedFloats[0];
+            CenterY = bd.data.serializedFloats[1];
+            Width = bd.data.serializedFloats[2];
+            Height = bd.data.serializedFloats[3];
+
+
+            rectColor = bd.data.serializedColors[0];
+
+
+            base.PopulateFromBase(bd);
+        }
+
+        #endregion
+
 
     }
 }
