@@ -132,10 +132,10 @@ namespace SpriteMaker
                 {
                     if (GUILayout.Button("New Asset File"))
                     {
-                        SpriteMakerAsset temp = new SpriteMakerAsset();
-                        temp.name = texBuilder.fileName;
+                        SpriteMakerAsset temp = ScriptableObject.CreateInstance<SpriteMakerAsset>();
+                        temp.FriendlyName = texBuilder.fileName;
                         drawCommandManager.SetupAsset(ref temp);
-                        string AssetPath = AssetDatabase.GenerateUniqueAssetPath("Assets/" + temp.name + ".asset");
+                        string AssetPath = AssetDatabase.GenerateUniqueAssetPath("Assets/" + temp.FriendlyName + ".asset");
                         AssetDatabase.CreateAsset(temp, AssetPath);
 
                         AssetDatabase.SaveAssets();
@@ -161,11 +161,11 @@ namespace SpriteMaker
                     {
                         activeAsset = loadAsset;
                         drawCommandManager.UseAsset(ref activeAsset);
-                        texBuilder.fileName = activeAsset.name;
+                        texBuilder.fileName = activeAsset.FriendlyName;
                     }
                     if (activeAsset != null)
                     {
-                        EditorGUILayout.LabelField("Currently Editing: " + activeAsset.name);
+                        EditorGUILayout.LabelField("Currently Editing: " + activeAsset.FriendlyName);
                     }
 
                 }
@@ -185,7 +185,7 @@ namespace SpriteMaker
                 EditorGUILayout.BeginVertical("Box");
                 {
 
-                    texBuilder.fileName = activeAsset.name = EditorGUILayout.TextField("File Name", texBuilder.fileName);
+                    texBuilder.fileName = activeAsset.FriendlyName = EditorGUILayout.TextField("File Name", texBuilder.fileName);
                     EditorGUILayout.BeginHorizontal();
                     {
                         GUILayout.Label("Width");

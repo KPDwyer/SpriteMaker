@@ -9,7 +9,7 @@ namespace SpriteMaker
     public class SpriteMakerAsset : ScriptableObject, ISerializationCallbackReceiver
     {
         [SerializeField]
-        public string name;
+        public string FriendlyName;
         [SerializeField]
         public List<BaseDrawCommand> DrawCommands;
 
