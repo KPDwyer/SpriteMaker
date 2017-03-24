@@ -56,6 +56,8 @@ namespace SpriteMaker
             //we only show further GUI if there's an asset loaded.
             if (activeAsset != null)
             {
+                Undo.RecordObject(activeAsset, "Spritemaker Asset changed");
+
                 //we draw sprite info first so users can always hit preview
                 GUISpriteInfo();
             
