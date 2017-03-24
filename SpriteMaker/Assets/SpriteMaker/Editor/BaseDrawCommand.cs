@@ -50,6 +50,8 @@ namespace SpriteMaker
         {
             public float[] serializedFloats;
             public Color[] serializedColors;
+            [SerializeField]
+            public Gradient[] serializedGradients;
         };
 
         public SerializedData data;
@@ -142,10 +144,19 @@ namespace SpriteMaker
             return cachedColor;
         }
 
+
+        /// <summary>
+        /// Called before serializing this draw call.  Derived classes must extend this and populate SerializaedData to be correctly serialized;
+        /// </summary>
         public virtual void OnBeforeSerialize()
         {
         }
 
+
+        /// <summary>
+        /// Called after serializing or anytime a BaseDrawCommand must be cast to a derived type.  builds derivedclass from data in SerializedData
+        /// </summary>
+        /// <param name="bd">Bd.</param>
         public virtual void PopulateFromBase(BaseDrawCommand bd)
         {
          

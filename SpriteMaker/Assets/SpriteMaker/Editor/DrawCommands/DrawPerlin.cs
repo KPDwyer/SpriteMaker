@@ -12,11 +12,13 @@ namespace SpriteMaker
         public float VerticalScale = 6.4f;
         public float xOffset;
         public float yOffset;
-        public Color FirstColor = Color.clear;
-        public Color SecondColor = Color.white;
+        public Gradient gradient;
+
+        private ScriptableGradientAsset gradientObject;
 
         private float xPosition;
         private float yPosition;
+
 
         public override Color[] DrawToColorArray(Color[] _input, int _width, int _height)
         {
@@ -29,7 +31,7 @@ namespace SpriteMaker
                     xPosition = (float)x / (float)_width;
 
                     _input[y * _width + x] = BlendPixelToCanvas(
-                        Color.Lerp(FirstColor, SecondColor,
+                        gradient.Evaluate(
                             Mathf.PerlinNoise(
                                 (xPosition * HorizontalScale) + xOffset, 
                                 (yPosition * VerticalScale) + yOffset
@@ -47,8 +49,33 @@ namespace SpriteMaker
             Name = "Perlin Noise";
             HorizontalScale = float.Parse(EditorGUILayout.TextField("Horizontal Scale", HorizontalScale.ToString()));
             VerticalScale = float.Parse(EditorGUILayout.TextField("Vertical Scale", VerticalScale.ToString()));
-            FirstColor = EditorGUILayout.ColorField("First Color", FirstColor);
-            SecondColor = EditorGUILayout.ColorField("Second Color", SecondColor);
+
+            //TODO: I can't believe this is how this must be done
+            //To get a nice gradient picker, we need to alter the serializedproperty of a serializedobject
+            //since this class isn;t serializable (derives fro something other than monobehaviour or scriptableobject),
+            //we create a SerializedObject that just has a gradient on it, set its gradient to out gradient, and show the field.
+            //if its changed, we apply those settings back to the serialized object and set our gradient from it.
+            if (gradientObject == null)
+            {
+                gradientObject = ScriptableObject.CreateInstance<ScriptableGradientAsset>();
+                gradientObject.gradient = gradient;
+            }
+
+            EditorGUI.BeginChangeCheck();
+            {
+                SerializedObject obj = new SerializedObject(gradientObject);
+                SerializedProperty sgrad = obj.FindProperty("gradient");
+                EditorGUILayout.PropertyField(sgrad, true, null);
+                if (EditorGUI.EndChangeCheck())
+                {
+                    obj.ApplyModifiedProperties();
+                    gradient = gradientObject.gradient;
+                }
+
+
+            }
+
+
 
             if (GUILayout.Button("Shuffle"))
             {
@@ -70,11 +97,8 @@ namespace SpriteMaker
             data.serializedFloats[2] = xOffset;
             data.serializedFloats[3] = yOffset;
 
-
-            data.serializedColors = new Color[2];
-            data.serializedColors[0] = FirstColor;
-            data.serializedColors[1] = SecondColor;
-
+            data.serializedGradients = new Gradient[1];
+            data.serializedGradients[0] = gradient;
 
             base.OnBeforeSerialize();
         }
@@ -87,8 +111,9 @@ namespace SpriteMaker
             yOffset = bd.data.serializedFloats[3];
 
 
-            FirstColor = bd.data.serializedColors[0];
-            SecondColor = bd.data.serializedColors[1];
+            gradient = bd.data.serializedGradients[0];
+
+
 
 
             base.PopulateFromBase(bd);
