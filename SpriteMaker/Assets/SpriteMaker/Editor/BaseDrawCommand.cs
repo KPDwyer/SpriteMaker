@@ -44,7 +44,11 @@ namespace SpriteMaker
 
         private Color cachedColor;
 
-
+        /// <summary>
+        /// when we serialize a draw command, it stores its data here so it gets serialized properly.
+        /// Unity doesn't nattively support serializing derived classes, so this class has to hold the data from derived classes
+        /// derived Draw Commands are responsible for storing and retrieving serialized data
+        /// </summary>
         [System.Serializable]
         public struct SerializedData
         {
@@ -144,7 +148,6 @@ namespace SpriteMaker
             return cachedColor;
         }
 
-
         /// <summary>
         /// Called before serializing this draw call.  Derived classes must extend this and populate SerializaedData to be correctly serialized;
         /// </summary>
@@ -152,9 +155,9 @@ namespace SpriteMaker
         {
         }
 
-
         /// <summary>
         /// Called after serializing or anytime a BaseDrawCommand must be cast to a derived type.  builds derivedclass from data in SerializedData
+        /// use this to populate properties from serializeddata
         /// </summary>
         /// <param name="bd">Bd.</param>
         public virtual void PopulateFromBase(BaseDrawCommand bd)
@@ -162,10 +165,6 @@ namespace SpriteMaker
          
             blendMode = bd.blendMode;
         }
-
-
-
-
-
+            
     }
 }
