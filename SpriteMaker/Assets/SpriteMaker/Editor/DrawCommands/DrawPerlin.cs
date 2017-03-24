@@ -12,7 +12,7 @@ namespace SpriteMaker
         public float VerticalScale = 6.4f;
         public float xOffset;
         public float yOffset;
-        public Gradient gradient;
+        public Gradient gradient = new Gradient();
 
         private ScriptableGradientAsset gradientObject;
 

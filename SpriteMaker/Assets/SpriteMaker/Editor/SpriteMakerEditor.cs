@@ -17,6 +17,7 @@ namespace SpriteMaker
 
         private bool previewFocus = false;
         private bool updateOnChange = false;
+        private bool saveOnChange = false;
 
         private bool showFile = true;
         private bool showSpriteInfo = true;
@@ -63,17 +64,32 @@ namespace SpriteMaker
             
 
 
-
-                //scroll area for the draw commands
-                ScrollPosition = EditorGUILayout.BeginScrollView(ScrollPosition);
+                EditorGUI.BeginChangeCheck();
                 {
-                    EditorGUILayout.BeginVertical();
+                    //scroll area for the draw commands
+                    ScrollPosition = EditorGUILayout.BeginScrollView(ScrollPosition);
                     {
-                        GUIDrawCommands();
+                        EditorGUILayout.BeginVertical();
+                        {
+                            GUIDrawCommands();
+                        }
+                        EditorGUILayout.EndVertical();	
                     }
-                    EditorGUILayout.EndVertical();	
+                    EditorGUILayout.EndScrollView();
+
+
+                    if (EditorGUI.EndChangeCheck())
+                    {
+                        if (updateOnChange)
+                        {
+                            PreviewTexture();
+                        }
+                        if (saveOnChange)
+                        {
+                            SaveAssetFile(false);
+                        }
+                    }
                 }
-                EditorGUILayout.EndScrollView();
 
 
 
@@ -122,6 +138,19 @@ namespace SpriteMaker
         }
 
 
+        private void SaveAssetFile(bool shouldFocus = false)
+        {
+            EditorUtility.SetDirty(activeAsset);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            if (shouldFocus)
+            {
+                EditorUtility.FocusProjectWindow();
+                Selection.activeObject = activeAsset;
+            }
+        }
+
+
 
         private void GUISpriteMaker()
         {
@@ -150,13 +179,11 @@ namespace SpriteMaker
                     //TODO do we need manual save
                     if (GUILayout.Button("Save Asset File"))
                     {
-                        EditorUtility.SetDirty(activeAsset);
-                        AssetDatabase.SaveAssets();
-                        AssetDatabase.Refresh();
-                        EditorUtility.FocusProjectWindow();
-                        Selection.activeObject = activeAsset;
-
+                        
+                        SaveAssetFile(true);
                     }
+                    saveOnChange = GUILayout.Toggle(saveOnChange, "Auto-Save (Experimental)");
+
                 
                     loadAsset = (SpriteMakerAsset)EditorGUILayout.ObjectField(activeAsset, typeof(SpriteMakerAsset), false);
                     if (activeAsset != loadAsset)
@@ -207,10 +234,8 @@ namespace SpriteMaker
                             PreviewTexture();
                             previewFocus = true;
                         }
-                        if (updateOnChange)
-                        {
-                            PreviewTexture();
-                        }
+
+
                         if (GUILayout.Button("Save Texture"))
                         {
                             SaveTexture();
