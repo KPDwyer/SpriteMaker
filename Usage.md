@@ -8,7 +8,10 @@ Window -> SpriteMaker
 
 ![Editor Window](Gallery/Sprite Maker Editor.png)
 
-The editor Window currently consists of 2 elements:  The Sprite Info Panel, and the Draw Command Queue
+The editor Window currently consists of 3 elements:  File Ops, The Sprite Info Panel, and the Draw Command Queue
+
+###File Ops
+File Ops provides an interface for loading, saving and creating SpriteMakerAssets, ScriptableObjects used to save working files.
 
 ###Sprite Info
 This Panel Allows you to select the name for your finished asset as well as its width and height in pixels.  There are buttons at the bottom of this panel for previewing and saving your asset.

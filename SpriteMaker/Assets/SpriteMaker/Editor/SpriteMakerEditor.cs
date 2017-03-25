@@ -138,6 +138,10 @@ namespace SpriteMaker
         }
 
 
+        /// <summary>
+        /// Saves the asset file toa  scriptable object
+        /// </summary>
+        /// <param name="shouldFocus">If set to <c>true</c>, will focus the asset file in the editor</param>
         private void SaveAssetFile(bool shouldFocus = false)
         {
             EditorUtility.SetDirty(activeAsset);
@@ -155,8 +159,6 @@ namespace SpriteMaker
         private void GUISpriteMaker()
         {
             showFile = GUILayout.Toggle(showFile, "File Ops", EditorStyles.boldLabel);
-            //GUILayout.Label("File Ops", EditorStyles.boldLabel);
-
             if (showFile)
             {
                 EditorGUILayout.BeginVertical("Box");
