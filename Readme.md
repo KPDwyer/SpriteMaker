@@ -25,3 +25,8 @@ By Defining shapes relative to the canvas, you can rescale the canvas at will to
 
 SpriteMaker isn't meant to make fullscale art assets, but I like to push what I can do with it
 ![Man](Gallery/Man.png)
+
+SpriteMaker can be used to make Noise maps right in the editor (more noise coming soon). Noise can also be a neat effect for static textures.
+![Perlin](Gallery/perlin2.png)
+![Perlin Two](Gallery/Perlin.png)
+
