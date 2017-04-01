@@ -20,7 +20,10 @@ namespace SpriteMaker
             Circle = 1,
             Rect = 2,
             RoundedRect = 3,
-            Perlin = 4
+            Perlin = 4,
+            Voronoi = 5,
+            RidgedMultifractal = 6,
+            Billow = 7
         }
 
 

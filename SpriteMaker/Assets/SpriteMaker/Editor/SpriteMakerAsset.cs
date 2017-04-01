@@ -46,6 +46,12 @@ namespace SpriteMaker
                         tempPerlin.PopulateFromBase(DrawCommands[i]);
                         DrawCommands[i] = tempPerlin;
                         break;
+                    case BaseDrawCommand.DrawCommandType.Voronoi:
+                        DrawVoronoi tempVoronoi = new DrawVoronoi();
+                        tempVoronoi.myType = BaseDrawCommand.DrawCommandType.Voronoi;
+                        tempVoronoi.PopulateFromBase(DrawCommands[i]);
+                        DrawCommands[i] = tempVoronoi;
+                        break;
                     case BaseDrawCommand.DrawCommandType.Rect:
                         DrawRect tempRect = new DrawRect();
                         tempRect.myType = BaseDrawCommand.DrawCommandType.Rect;
@@ -57,6 +63,18 @@ namespace SpriteMaker
                         tempRRect.myType = BaseDrawCommand.DrawCommandType.RoundedRect;
                         tempRRect.PopulateFromBase(DrawCommands[i]);
                         DrawCommands[i] = tempRRect;
+                        break;
+                    case BaseDrawCommand.DrawCommandType.RidgedMultifractal:
+                        DrawRidgedMultifractal tempRidged = new DrawRidgedMultifractal();
+                        tempRidged.myType = BaseDrawCommand.DrawCommandType.RidgedMultifractal;
+                        tempRidged.PopulateFromBase(DrawCommands[i]);
+                        DrawCommands[i] = tempRidged;
+                        break;
+                    case BaseDrawCommand.DrawCommandType.Billow:
+                        DrawBillow tempBillow = new DrawBillow();
+                        tempBillow.myType = BaseDrawCommand.DrawCommandType.Billow;
+                        tempBillow.PopulateFromBase(DrawCommands[i]);
+                        DrawCommands[i] = tempBillow;
                         break;
                     default:
                         break;
