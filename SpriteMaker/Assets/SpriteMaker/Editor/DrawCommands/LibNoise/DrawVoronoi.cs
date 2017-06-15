@@ -14,6 +14,8 @@ namespace SpriteMaker
         public float XOffset = 0.0f;
         public float YOffset = 0.0f;
         public int seed = 1;
+        public int noiseScaleX = 128;
+        public int noiseScaleY = 128;
 
         public Gradient gradient;
 
@@ -29,11 +31,10 @@ namespace SpriteMaker
 
             LibNoise.Generator.Voronoi mv = new LibNoise.Generator.Voronoi(frequency, displacement, seed, true);
 
-            int scaleX = 128; 
-            int scaleY = 128;
+
 
             Noise2D m = new Noise2D(_width, _height, (ModuleBase)mv);
-            m.GeneratePlanar(XOffset, XOffset + scaleX, YOffset, YOffset + scaleY);
+            m.GeneratePlanar(XOffset, XOffset + noiseScaleX, YOffset, YOffset + noiseScaleY);
             float[,] result = m.GetNormalizedData(false, 0, 0);
 
 
@@ -58,6 +59,8 @@ namespace SpriteMaker
             XOffset = EditorGUILayout.FloatField("X Offset", XOffset);
             YOffset = EditorGUILayout.FloatField("Y Offset", YOffset);
             seed = EditorGUILayout.IntField("Seed", seed);
+            noiseScaleX = EditorGUILayout.IntField("Noise Scale X", noiseScaleX);
+            noiseScaleY = EditorGUILayout.IntField("Noise Scale Y", noiseScaleY);
 
             if (gradientObject == null)
             {
@@ -88,12 +91,14 @@ namespace SpriteMaker
         {
             data = new SerializedData();
 
-            data.serializedFloats = new float[5];
+            data.serializedFloats = new float[7];
             data.serializedFloats[0] = frequency;
             data.serializedFloats[1] = displacement;
             data.serializedFloats[2] = XOffset;
             data.serializedFloats[3] = YOffset;
             data.serializedFloats[4] = (float)seed;
+            data.serializedFloats[5] = (float)noiseScaleX;
+            data.serializedFloats[6] = (float)noiseScaleY;
 
 
             data.serializedGradients = new Gradient[1];
@@ -110,6 +115,9 @@ namespace SpriteMaker
             XOffset = bd.data.serializedFloats[2];
             YOffset = bd.data.serializedFloats[3];
             seed = (int)bd.data.serializedFloats[4];
+            noiseScaleX = (int)bd.data.serializedFloats[5];
+            noiseScaleY = (int)bd.data.serializedFloats[6];
+
 
 
             gradient = bd.data.serializedGradients[0];
