@@ -146,6 +146,15 @@ namespace SpriteMaker
                 case BaseDrawCommand.DrawCommandType.RoundedRect:
                     bdc = new DrawRoundedRect();
                     break;
+                case BaseDrawCommand.DrawCommandType.Voronoi:
+                    bdc = new DrawVoronoi();
+                    break;
+                case BaseDrawCommand.DrawCommandType.RidgedMultifractal:
+                    bdc = new DrawRidgedMultifractal();
+                    break;
+                case BaseDrawCommand.DrawCommandType.Billow:
+                    bdc = new DrawBillow();
+                    break;
                 case BaseDrawCommand.DrawCommandType.Perlin:
                     bdc = new DrawPerlin();
                     break;
